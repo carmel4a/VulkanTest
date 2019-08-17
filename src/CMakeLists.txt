@@ -17,6 +17,7 @@ project(
         CXX)
 
 option(TEST_DEPENDENCES "Build tests for dependences?" NO)
+option(VULKAN_SDK_PATH"Absolute path to VulkanSDK" "")
         
 # Must use GNUInstallDirs to install libraries into correct locations on all
 # platforms.
