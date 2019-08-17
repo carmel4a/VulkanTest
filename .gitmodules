@@ -1,0 +1,3 @@
+[submodule "src/VulkanTestDependences"]
+	path = src/VulkanTestDependences
+	url = https://github.com/carmel4a/VulkanTestDependences
