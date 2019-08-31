@@ -6,7 +6,8 @@ project(VulkanTest_WindowsManager)
 include(${CMAKE_SOURCE_DIR}/cmake/Utils.cmake)
 
 set(SRC WindowsManager.cpp
-        GlfwWindowsManager.cpp)
+        GlfwWindowsManager.cpp
+        GlfwWindowHandler.cpp)
 
 default_lib(${PROJECT_NAME} WindowsManager "${SRC}")
 

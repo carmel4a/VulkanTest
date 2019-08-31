@@ -9,53 +9,51 @@
 namespace VulkanTest::WindowsManager {
     class GlfwWindowHandler : public WindowHandlerInterface<GLFWwindow> {
       public:
-        GlfwWindowHandler()
-                : window { nullptr }
-                , m_id {} {
-            create();
-        }
+        GlfwWindowHandler();
+        inline ~GlfwWindowHandler();
 
-        auto create() -> GLFWwindow* const override {
-            glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-            glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-            window = glfwCreateWindow(800, 600, "Vulkan window", nullptr, 
-                    nullptr);
-            return window;
-        }
+        GlfwWindowHandler(const GlfwWindowHandler&) = delete;
+        GlfwWindowHandler& operator=(const GlfwWindowHandler&) = delete;
 
-        auto getWindow() const -> GLFWwindow* const override {
-            return window;
-        }
+        constexpr inline operator GLFWwindow*() override;
+        constexpr inline operator const GLFWwindow* const() const override;
 
-        operator GLFWwindow*() override {
-            return window;
-        }
+        auto create() -> GLFWwindow* const override;
 
-        operator const GLFWwindow* const() const override {
-            return window;
-        }
+        constexpr inline auto getWindow() const -> GLFWwindow* const override;
+        constexpr inline auto getId() const -> const Id& override;
 
-        const Id& getId() const override {
-            return m_id;
-        }
-
-        bool shouldClose() const override {
-            return (bool) glfwWindowShouldClose(window);
-        }
-
-        void destroy() override {
-            glfwDestroyWindow(window);
-            window = nullptr;
-        }
-
-        ~GlfwWindowHandler() {
-            destroy();
-        }
+        inline bool shouldClose() const override;
+        void destroy() override;
 
       private:
         GLFWwindow* window;
         Id m_id;
     };
+
+    GlfwWindowHandler::~GlfwWindowHandler() {
+        destroy();
+    }
+
+    constexpr GlfwWindowHandler::operator GLFWwindow*() {
+        return window;
+    }
+
+    constexpr GlfwWindowHandler::operator const GLFWwindow* const() const {
+        return window;
+    }
+
+    constexpr auto GlfwWindowHandler::getWindow() const -> GLFWwindow* const {
+        return window;
+    }
+
+    constexpr auto GlfwWindowHandler::getId() const -> const Id& {
+        return m_id;
+    }
+
+    bool GlfwWindowHandler::shouldClose() const {
+        return (bool) glfwWindowShouldClose(window);
+    }
 }
 
 #endif // !WINDOWS_MANAGER__GLFW_WINDOW_HANDLER
