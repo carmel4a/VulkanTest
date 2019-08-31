@@ -7,11 +7,11 @@
 
 namespace VulkanTest::WindowsManager {
     template <typename T>
-    class WindowHandlerInterface;
+    class IWindowHandler;
     template <typename T>
-    using UniqueWindow = std::unique_ptr<WindowHandlerInterface<T>>;
+    using UniqueWindow = std::unique_ptr<IWindowHandler<T>>;
     template <typename T>
-    using Window = WindowHandlerInterface<T>* const;
+    using Window = IWindowHandler<T>* const;
 
     class Id {
       public:

@@ -1,13 +1,13 @@
 #ifndef WINDOWS_MANAGER__GLFW_WINDOW_HANDLER
 #define WINDOWS_MANAGER__GLFW_WINDOW_HANDLER
 
-#include "WindowsManager/WindowHandlerInterface.hpp"
+#include "WindowsManager/IWindowHandler.hpp"
 
 #define GLFW_INCLUDE_VULKAN
 #include "GLFW/glfw3.h"
 
 namespace VulkanTest::WindowsManager {
-    class GlfwWindowHandler : public WindowHandlerInterface<GLFWwindow> {
+    class GlfwWindowHandler : public IWindowHandler<GLFWwindow> {
       public:
         GlfwWindowHandler();
         inline ~GlfwWindowHandler();

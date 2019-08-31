@@ -4,11 +4,11 @@
 #include <memory>
 #include <list>
 
-#include "WindowsManager/WindowsManagerInterface.hpp"
+#include "WindowsManager/IWindowsManager.hpp"
 
 namespace VulkanTest::WindowsManager {
     template <typename T>
-    class WindowsManager : public WindowsManagerInterface<T> {
+    class WindowsManager : public IWindowsManager<T> {
       public:
         WindowsManager()
             : m_windows { }
@@ -28,11 +28,11 @@ namespace VulkanTest::WindowsManager {
         virtual auto removeWindows() -> void override;
 
       protected:
-        virtual auto getNewWindow() -> WindowHandlerInterface<T>* const =0;
+        virtual auto getNewWindow() -> IWindowHandler<T>* const =0;
 
       private:
         std::list<UniqueWindow<T>> m_windows;
-        WindowHandlerInterface<T>* m_mainWindow;
+        IWindowHandler<T>* m_mainWindow;
     };
 
     template <typename T>

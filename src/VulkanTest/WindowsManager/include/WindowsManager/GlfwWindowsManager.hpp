@@ -11,7 +11,7 @@ namespace VulkanTest::WindowsManager {
     class GlfwWindowsManager : public WindowsManager<GLFWwindow> {
       public:
       protected:
-        virtual auto getNewWindow() -> WindowHandlerInterface<GLFWwindow>* const override;
+        virtual auto getNewWindow() -> IWindowHandler<GLFWwindow>* const override;
     };
 }
 

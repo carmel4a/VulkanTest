@@ -2,6 +2,6 @@
 
 using ::VulkanTest::WindowsManager::GlfwWindowsManager;
 
-auto GlfwWindowsManager::getNewWindow() -> WindowHandlerInterface<GLFWwindow>* const {
+auto GlfwWindowsManager::getNewWindow() -> IWindowHandler<GLFWwindow>* const {
     return new GlfwWindowHandler();
 }
