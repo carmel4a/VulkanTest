@@ -1,17 +1,20 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 enable_testing()
 
-add_subdirectory(Application)
-add_subdirectory(WindowsManager)
+project(VulkanTest_Application)
 
-set(SRC
-    main.cpp)
+find_package(glm REQUIRED)
 
 include(${CMAKE_SOURCE_DIR}/cmake/Utils.cmake)
-default_exe(${PROJECT_NAME} "" "${SRC}")
+set(SRC
+    Application.cpp)
+
+default_lib(${PROJECT_NAME} Application "${SRC}")
 
 # Define the libraries this project depends upon
 target_link_libraries(
     ${PROJECT_NAME}
-    VulkanTest_Application
-    )
+    PUBLIC
+    glfw
+    vulkan
+    VulkanTest_WindowsManager)

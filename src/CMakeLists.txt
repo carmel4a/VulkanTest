@@ -1,20 +1,32 @@
 # CMake files based on:
 # https://rix0r.nl/blog/2015/08/13/cmake-guide/
 
-cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+cmake_minimum_required(
+    VERSION 3.2
+    FATAL_ERROR)
 
-set(MAIN_PROJECT_NAME "VulkanTest") # Equals to ${PROJECT_NAME} in this scope.
 set(MAIN_PROJECT_VERSION "0.0.1")
 project(
-    ${MAIN_PROJECT_NAME}
+    "VulkanTest"
     VERSION
-        ${MAIN_PROJECT_VERSION}
+        0.0.1
     DESCRIPTION
         ""
     HOMEPAGE_URL
         ""
     LANGUAGES
         CXX)
+
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+set(default_build_type "Release")
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "Setting build type to '${default_build_type}' as none was specified.")
+  set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
+      STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+    "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
 
 option(TEST_DEPENDENCES "Build tests for dependences?" NO)
 option(VULKAN_SDK_PATH"Absolute path to VulkanSDK" "")
