@@ -14,6 +14,8 @@ namespace VulkanTest::WindowsManager {
             : m_windows { }
             , m_mainWindow { nullptr } {}
 
+        virtual ~WindowsManager() = default;
+
         WindowsManager(const WindowsManager&) = delete;
         WindowsManager& operator=(const WindowsManager&) = delete;
 

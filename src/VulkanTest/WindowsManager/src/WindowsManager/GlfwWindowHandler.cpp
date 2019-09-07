@@ -18,7 +18,6 @@ auto GlfwWindowHandler::create() -> GLFWwindow* const {
 }
 
 void GlfwWindowHandler::destroy() {
-    glfwDestroyWindow(window);
-    window = nullptr;
+    glfwDestroyWindow(m_window);
+    m_window = nullptr;
 }
-

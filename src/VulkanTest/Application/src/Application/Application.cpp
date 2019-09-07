@@ -6,10 +6,10 @@
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #include "glm/glm.hpp"
 
-using ::VulkanTest::Application::Application;
+using VulkanTest::Application::Application;
 
-Application::Application() :
-        windowsManager {} {
+Application::Application()
+        : windowsManager {  } {
     try {
         initGlfw();
         createMainWindow();

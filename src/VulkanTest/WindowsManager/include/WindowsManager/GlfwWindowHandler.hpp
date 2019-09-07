@@ -36,15 +36,17 @@ namespace VulkanTest::WindowsManager {
     }
 
     constexpr GlfwWindowHandler::operator GLFWwindow*() {
-        return window;
+        return m_window;
     }
 
     constexpr GlfwWindowHandler::operator const GLFWwindow* const() const {
-        return window;
+        return m_window;
+    }
+
     }
 
     constexpr auto GlfwWindowHandler::getWindow() const -> GLFWwindow* const {
-        return window;
+        return m_window;
     }
 
     constexpr auto GlfwWindowHandler::getId() const -> const Id& {
@@ -52,7 +54,7 @@ namespace VulkanTest::WindowsManager {
     }
 
     bool GlfwWindowHandler::shouldClose() const {
-        return (bool) glfwWindowShouldClose(window);
+        return (bool) glfwWindowShouldClose(m_window);
     }
 }
 

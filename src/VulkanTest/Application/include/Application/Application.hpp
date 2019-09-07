@@ -1,7 +1,6 @@
 #ifndef APPLICATION__APPLICATION
 #define APPLICATION__APPLICATION
 
-#include <string>
 #include "WindowsManager/GlfwWindowsManager.hpp"
 
 namespace VulkanTest::Application {
@@ -17,7 +16,7 @@ namespace VulkanTest::Application {
         void mainLoop();
         void cleanup();
 
-        ::VulkanTest::WindowsManager::GlfwWindowsManager windowsManager;
+        VulkanTest::WindowsManager::GlfwWindowsManager windowsManager;
     };
 }
 
