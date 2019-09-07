@@ -27,7 +27,13 @@ void Application::initGlfw() {
 }
 
 void Application::createMainWindow() {
+    auto& newWindowSettings = windowsManager.getNewWindowSettings();
+    newWindowSettings.setGlfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    newWindowSettings.setGlfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+    newWindowSettings.setName("Vulkan window");
+    newWindowSettings.setSize(800, 600);
     windowsManager.setMainWindow(windowsManager.createWindow());
+
 }
 
 void Application::initVulkan() {

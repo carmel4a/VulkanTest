@@ -10,6 +10,13 @@ namespace VulkanTest::WindowsManager {
     class GlfwWindowHandler : public IWindowHandler<GLFWwindow> {
       public:
         GlfwWindowHandler();
+        GlfwWindowHandler(const std::list<int>& hints,
+                          const std::string& name,
+                          unsigned w,
+                          unsigned h,
+                          GLFWmonitor* m_monitor,
+                          GLFWwindow* m_share);
+
         inline ~GlfwWindowHandler();
 
         GlfwWindowHandler(const GlfwWindowHandler&) = delete;
@@ -18,8 +25,6 @@ namespace VulkanTest::WindowsManager {
         constexpr inline operator GLFWwindow*() override;
         constexpr inline operator const GLFWwindow* const() const override;
 
-        auto create() -> GLFWwindow* const override;
-
         constexpr inline auto getWindow() const -> GLFWwindow* const override;
         constexpr inline auto getId() const -> const Id& override;
 
@@ -27,7 +32,14 @@ namespace VulkanTest::WindowsManager {
         void destroy() override;
 
       private:
-        GLFWwindow* window;
+        inline auto create(const std::list<int>& hints,
+                           const std::string&    name,
+                           unsigned              w,
+                           unsigned              h,
+                           GLFWmonitor*          monitor,
+                           GLFWwindow*           share) -> GLFWwindow* const;
+
+        GLFWwindow* m_window;
         Id m_id;
     };
 
@@ -43,6 +55,20 @@ namespace VulkanTest::WindowsManager {
         return m_window;
     }
 
+    auto GlfwWindowHandler::create(const std::list<int>& hints,
+                                   const std::string& name,
+                                   unsigned w,
+                                   unsigned h,
+                                   GLFWmonitor* monitor,
+                                   GLFWwindow* share) -> GLFWwindow* const {
+        auto it = hints.begin();
+        while (it != hints.end()) {
+            int hint = *(it++);
+            int value = *(it++);
+            glfwWindowHint(hint, value);
+        }
+        
+        return glfwCreateWindow(w, h, name.c_str(), monitor, share);
     }
 
     constexpr auto GlfwWindowHandler::getWindow() const -> GLFWwindow* const {

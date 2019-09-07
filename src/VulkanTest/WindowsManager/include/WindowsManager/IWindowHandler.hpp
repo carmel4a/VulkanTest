@@ -6,7 +6,6 @@
 namespace VulkanTest::WindowsManager {
     template<typename rawApiWindowType>
     struct IWindowHandler {
-        virtual auto create() -> rawApiWindowType* const =0;
         virtual auto getWindow() const -> rawApiWindowType* const =0;
         virtual operator rawApiWindowType*() =0;
         virtual operator const rawApiWindowType* const() const =0;
