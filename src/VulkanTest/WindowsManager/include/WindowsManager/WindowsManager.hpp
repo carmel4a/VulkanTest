@@ -100,6 +100,8 @@ namespace VulkanTest::WindowsManager {
     auto WindowsManager<T>::forceRemoveWindow(const Id& id) -> bool {
         for (typename std::list<UniqueWindow<T>>::iterator window = m_windows.begin(); window != m_windows.end(); ++window)
             if ((*window)->getId() == id) {
+                if (m_mainWindow->getId() == id)
+                    m_mainWindow = nullptr;
                 (*window)->destroy();
                 m_windows.erase(window);
                 return true;
