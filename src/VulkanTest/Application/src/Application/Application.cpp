@@ -33,7 +33,6 @@ void Application::createMainWindow() {
     newWindowSettings.setName("Vulkan window");
     newWindowSettings.setSize(800, 600);
     windowsManager.setMainWindow(windowsManager.createWindow());
-
 }
 
 void Application::initVulkan() {
