@@ -35,8 +35,13 @@ namespace VulkanTest::WindowsManager {
         /** This method should be preffered by user, over @ref getWindow */
         virtual auto getMainWindow() const -> Window<T> =0;
 
+        virtual void refresh() =0;
+
         /// Removes window in forcefull mode.
         virtual bool removeWindow(const Id& id) =0;
+
+        /// Removes window in forcefull mode.
+        virtual auto removeWindow(const UniqueWindow<T>& window) -> bool =0;
 
         /// Removes all windows in forcefull mode.
         virtual void removeWindows() =0;

@@ -26,13 +26,19 @@ namespace VulkanTest::WindowsManager {
         virtual void setMainWindow(const Window<T> window) override;
         constexpr virtual auto getMainWindow() const -> Window<T> override;
 
+        virtual void refresh() override;
+
         virtual auto removeWindow(const Id& id) -> bool override;
+        virtual auto removeWindow(const UniqueWindow<T>& window) -> bool override;
         virtual auto removeWindows() -> void override;
 
       protected:
         virtual auto getNewWindow() -> IWindowHandler<T>* const =0;
+        auto forceRemoveWindow(const Id& id) -> bool;
+        auto forceRremoveWindow(const UniqueWindow<T>& window) -> bool;
 
       private:
+        std::list<const Id*> m_windowsToRemove;
         std::list<UniqueWindow<T>> m_windows;
         IWindowHandler<T>* m_mainWindow;
     };
@@ -41,7 +47,6 @@ namespace VulkanTest::WindowsManager {
     auto WindowsManager<T>::createWindow() -> Window<T> {
         m_windows.emplace_back(nullptr);
         m_windows.back().reset(getNewWindow());
-        m_windows.back()->create();
         return m_windows.back().get();
     }
 
@@ -69,14 +74,42 @@ namespace VulkanTest::WindowsManager {
     }
 
     template <typename T>
+    void WindowsManager<T>::refresh() {
+        for (const Id* const id : m_windowsToRemove)
+            forceRemoveWindow(*id);
+        m_windowsToRemove.clear();
+    }
+
+
+    template <typename T>
     auto WindowsManager<T>::removeWindow(const Id& id) -> bool {
-        for (auto window = m_windows.begin(); window != m_windows.end(); ++window)
+        for (typename std::list<UniqueWindow<T>>::iterator window = m_windows.begin(); window != m_windows.end(); ++window)
+            if ((*window)->getId() == id) {
+                m_windowsToRemove.push_back(&id);
+                return true;
+            }
+        return false;
+    }
+
+    template <typename T>
+    auto WindowsManager<T>::removeWindow(const UniqueWindow<T>& window) -> bool {
+        return removeWindow(window->getId());
+    }
+
+    template <typename T>
+    auto WindowsManager<T>::forceRemoveWindow(const Id& id) -> bool {
+        for (typename std::list<UniqueWindow<T>>::iterator window = m_windows.begin(); window != m_windows.end(); ++window)
             if ((*window)->getId() == id) {
                 (*window)->destroy();
                 m_windows.erase(window);
                 return true;
             }
         return false;
+    }
+
+    template <typename T>
+    auto WindowsManager<T>::forceRremoveWindow(const UniqueWindow<T>& window) -> bool {
+        return forceRemoveWindow(window->getId());
     }
 
     template <typename T>

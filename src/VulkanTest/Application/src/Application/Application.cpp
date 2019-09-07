@@ -38,7 +38,11 @@ void Application::initVulkan() {
 }
 
 void Application::mainLoop() {
-    while(!(windowsManager.getMainWindow()->shouldClose())) {
+    while (!windowsManager.getWindows().empty()) {
+        windowsManager.refresh();
+        for (auto& window : windowsManager.getWindows())
+            if (window == nullptr || window->shouldClose())
+                windowsManager.removeWindow(window);
         glfwPollEvents();
     }
 }

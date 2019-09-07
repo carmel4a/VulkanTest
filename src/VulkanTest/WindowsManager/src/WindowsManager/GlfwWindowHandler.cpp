@@ -4,18 +4,19 @@ using VulkanTest::WindowsManager::GlfwWindowHandler;
 using VulkanTest::WindowsManager::Id;
 
 GlfwWindowHandler::GlfwWindowHandler()
-        : window { nullptr }
-        , m_id {} {
-    create();
-}
+        : GlfwWindowHandler(std::list<int>(),
+                            "Default window name",
+                            800, 600,
+                            nullptr, nullptr) {}
 
-auto GlfwWindowHandler::create() -> GLFWwindow* const {
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-    window = glfwCreateWindow(800, 600, "Vulkan window", nullptr, 
-            nullptr);
-    return window;
-}
+GlfwWindowHandler::GlfwWindowHandler(const std::list<int>& hints,
+                                     const std::string&    name,
+                                     unsigned              w,
+                                     unsigned              h,
+                                     GLFWmonitor*          monitor,
+                                     GLFWwindow*           share)
+            : m_window { create(hints, name, w, h, monitor, share) }
+            , m_id {} {}
 
 void GlfwWindowHandler::destroy() {
     glfwDestroyWindow(m_window);
